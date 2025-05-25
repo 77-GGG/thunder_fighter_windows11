@@ -1,0 +1,46 @@
+# ---- C & C++ ----
+*.o
+*.obj
+*.lo
+*.la
+*.al
+*.libs
+*.a
+*.so
+*.dll
+*.exe
+*.out
+*.dSYM/
+*.gcno
+*.gcda
+*.gcov
+
+# ---- Raylib (可选: 忽略生成的纹理或中间资源) ----
+*.wav
+*.ogg
+*.mp3
+*.tmp
+*.bak
+
+# ---- CMake ----
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+build/
+cmake-build-*/
+
+# ---- macOS 系统文件 ----
+.DS_Store
+
+# ---- CLion (JetBrains IDE) ----
+.idea/
+*.iml
+
+# ---- 日志文件 ----
+*.log
+
+# ---- 其他用户缓存文件 ----
+*.swp
+*.swo
+*~
