@@ -4,10 +4,7 @@
 *.lo
 *.la
 *.al
-*.libs
-*.a
 *.so
-*.dll
 *.exe
 *.out
 *.dSYM/
@@ -16,9 +13,7 @@
 *.gcov
 
 # ---- Raylib (可选: 忽略生成的纹理或中间资源) ----
-*.wav
 *.ogg
-*.mp3
 *.tmp
 *.bak
 
