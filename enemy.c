@@ -4,7 +4,8 @@
 #include "enemy.h"
 #include <stdlib.h>
 
-static Enemy enemies[MAX_ENEMIES];
+Enemy enemy;
+Enemy enemies[MAX_ENEMIES];
 static EnemyBullet bullets[MAX_ENEMY_BULLETS];
 static int frameCount = 0;
 
@@ -75,4 +76,19 @@ void DrawEnemyBullets(void) {
             DrawCircleV(bullets[i].position, 10, DARKBLUE);
         }
     }
+}
+
+Rectangle GetEnemyRect()
+{
+    return enemy.rect;
+}
+
+bool IsEnemyActive()
+{
+    return enemy.active;
+}
+
+void DeactivateEnemy()
+{
+    enemy.active = false;
 }

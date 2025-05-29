@@ -3,7 +3,7 @@
 //
 #include "bullet.h"
 
-static Bullet bullets[MAX_BULLETS];  // 模块私有变量
+Bullet bullets[MAX_BULLETS];  // 模块私有变量
 
 void InitBullets(void) {
     for (int i = 0; i < MAX_BULLETS; i++) {
@@ -31,4 +31,19 @@ void UpdateAndDrawBullets(void) {
             DrawCircleV(bullets[i].position, 10, RED);
         }
     }
+}
+
+Rectangle GetBulletRect(int index)
+{
+    return bullets[index].rect;
+}
+
+bool IsBulletActive(int index)
+{
+    return bullets[index].active;
+}
+
+void DeactivateBullet(int index)
+{
+    bullets[index].active = false;
 }

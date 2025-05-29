@@ -18,3 +18,9 @@ void plane_movement(int *position_x,int *position_y) {
         *position_x += 10;
     }
 }
+
+Rectangle GetPlaneRect()
+{
+    // 假设战机的矩形定义
+    return (Rectangle){100, 100, 50, 50};
+}
