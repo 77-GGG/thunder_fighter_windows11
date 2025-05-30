@@ -4,6 +4,7 @@
 #include "enemy.h"
 #include <stdlib.h>
 #include <math.h>
+#include "bullet.h"
 
 Texture2D enemy_texture;
 Texture2D enemy_laser_texture;
