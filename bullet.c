@@ -3,31 +3,38 @@
 //
 #include "bullet.h"
 
-static Bullet bullets[MAX_BULLETS];  // 模块私有变量
-
-void InitBullets(void) {
+void InitBullets(Bullet *bullets) {
     for (int i = 0; i < MAX_BULLETS; i++) {
         bullets[i].active = false;
     }
 }
 
-void FireBullet(int x, int y) {
+void FireBullet(Bullet *bullets, Vector2 position, Vector2 velocity) {
     for (int i = 0; i < MAX_BULLETS; i++) {
         if (!bullets[i].active) {
-            bullets[i].position = (Vector2){x + 127, y + 10};
+            bullets[i].position = position;
+            bullets[i].velocity = velocity;
             bullets[i].active = true;
             break;
         }
     }
 }
 
-void UpdateAndDrawBullets(void) {
+void UpdateBullets(Bullet *bullets) {
     for (int i = 0; i < MAX_BULLETS; i++) {
         if (bullets[i].active) {
-            bullets[i].position.y -= 10;
-            if (bullets[i].position.y < 0) {
+            bullets[i].position.x += bullets[i].velocity.x;
+            bullets[i].position.y += bullets[i].velocity.y;
+
+            if (bullets[i].position.y < 0 || bullets[i].position.y > 1600)
                 bullets[i].active = false;
-            }
+        }
+    }
+}
+
+void DrawBullets(Bullet *bullets) {
+    for (int i = 0; i < MAX_BULLETS; i++) {
+        if (bullets[i].active) {
             DrawCircleV(bullets[i].position, 10, RED);
         }
     }
