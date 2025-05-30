@@ -3,76 +3,37 @@
 //
 #include "enemy.h"
 #include <stdlib.h>
+Texture2D enemy_texture;
 
-static Enemy enemies[MAX_ENEMIES];
-static EnemyBullet bullets[MAX_ENEMY_BULLETS];
-static int frameCount = 0;
 
-void InitEnemies(void) {
+void LoadEnemyTexture(void) {
+    enemy_texture = LoadTexture("../rsc/enemy.png");
+}
+
+void UnloadEnemyTexture(void) {
+    UnloadTexture(enemy_texture);
+}
+void InitEnemies(Enemy *enemies) {
     for (int i = 0; i < MAX_ENEMIES; i++) {
-        enemies[i].position = (Vector2){100 + i * 120, 100};
+        enemies[i].position = (Vector2){rand() % 700 + 50, rand() % 200};
+        enemies[i].hp = 3;//敌机的生命值
         enemies[i].active = true;
     }
-
-    for (int i = 0; i < MAX_ENEMY_BULLETS; i++) {
-        bullets[i].active = false;
-    }
 }
 
-void FireEnemyBullet(Vector2 pos) {
-    for (int i = 0; i < MAX_ENEMY_BULLETS; i++) {
-        if (!bullets[i].active) {
-            bullets[i].position = (Vector2){pos.x + 30, pos.y + 60};
-            bullets[i].active = true;
-            break;
-        }
-    }
-}
-
-void UpdateEnemies(Texture2D enemyTexture) {
-    frameCount++;
-
-    for (int i = 0; i < MAX_ENEMIES; i++) {
-        if (!enemies[i].active) continue;
-
-        // 敌机左右随机移动
-        if (frameCount % 30 == 0) {
-            int dir = rand() % 3 - 1; // -1, 0, 1
-            enemies[i].position.x += dir * 10;
-            if (enemies[i].position.x < 0) enemies[i].position.x = 0;
-            if (enemies[i].position.x > 750) enemies[i].position.x = 750;
-        }
-
-        // 敌机发射子弹（每隔 60 帧）
-        if (frameCount % 60 == 0) {
-            FireEnemyBullet(enemies[i].position);
-        }
-    }
-}
-
-void DrawEnemies(Texture2D enemyTexture) {
+void UpdateEnemies(Enemy *enemies) {
     for (int i = 0; i < MAX_ENEMIES; i++) {
         if (enemies[i].active) {
-            DrawTexture(enemyTexture, enemies[i].position.x, enemies[i].position.y, WHITE);
+            enemies[i].position.y += 1; // 慢慢向下
         }
     }
 }
 
-void UpdateEnemyBullets(void) {
-    for (int i = 0; i < MAX_ENEMY_BULLETS; i++) {
-        if (bullets[i].active) {
-            bullets[i].position.y += 8;
-            if (bullets[i].position.y > 1600) {
-                bullets[i].active = false;
-            }
-        }
-    }
-}
-
-void DrawEnemyBullets(void) {
-    for (int i = 0; i < MAX_ENEMY_BULLETS; i++) {
-        if (bullets[i].active) {
-            DrawCircleV(bullets[i].position, 10, DARKBLUE);
+void DrawEnemies(Enemy *enemies) {
+    for (int i = 0; i < MAX_ENEMIES; i++) {
+        if (enemies[i].active) {
+            // DrawCircleV(enemies[i].position, 32, BLUE);
+            DrawTexture(enemy_texture,enemies[i].position.x,enemies[i].position.y,WHITE);
         }
     }
 }

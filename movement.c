@@ -4,17 +4,11 @@
 #include "movement.h"
 #include "raylib.h"
 
-void plane_movement(int *position_x,int *position_y) {
-    if (IsKeyDown(KEY_W)) {
-        *position_y -= 10;
-    }
-    if (IsKeyDown(KEY_S)) {
-        *position_y += 10;
-    }
-    if (IsKeyDown(KEY_A)) {
-        *position_x -= 10;
-    }
-    if (IsKeyDown(KEY_D)) {
-        *position_x += 10;
-    }
+
+void movement(float *x, float *y) {
+    if (IsKeyDown(KEY_W)) *y -= 10;
+    if (IsKeyDown(KEY_S)) *y += 10;
+    if (IsKeyDown(KEY_A)) *x -= 10;
+    if (IsKeyDown(KEY_D)) *x += 10;
 }
+

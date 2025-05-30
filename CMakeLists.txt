@@ -16,6 +16,10 @@ add_executable(raylibTest main.c
         include/movement.h
         movement.c
         bullet.c
-        enemy.c)
+        enemy.c
+        include/utils.h
+        utils.c
+        include/collision.h
+        collision.c)
 target_link_libraries(raylibTest libraylib.a)
 target_link_libraries(raylibTest winmm)

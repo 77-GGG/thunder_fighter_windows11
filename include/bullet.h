@@ -6,17 +6,19 @@
 #define BULLET_H
 
 #include "raylib.h"
+#include <stdbool.h>
 
 #define MAX_BULLETS 100
 
 typedef struct Bullet {
     Vector2 position;
+    Vector2 velocity;
     bool active;
 } Bullet;
 
-void InitBullets(void);
-void FireBullet(int x, int y);
-void UpdateAndDrawBullets(void);
-
+void InitBullets(Bullet *bullets);
+void FireBullet(Bullet *bullets, Vector2 position, Vector2 velocity);
+void UpdateBullets(Bullet *bullets);
+void DrawBullets(Bullet *bullets);
 
 #endif //BULLET_H
