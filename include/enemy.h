@@ -11,10 +11,21 @@
 #define MAX_ENEMY_BULLETS 50
 extern Texture2D enemy_texture;
 
-typedef struct Enemy {
+typedef enum {
+    ENEMY_NORMAL,   
+    ENEMY_LASER,   
+    ENEMY_ZIGZAG    
+} EnemyType;
+
+typedef struct {
     Vector2 position;
-    int hp;
-    bool active;
+    int hp;           
+    bool active;     
+    EnemyType type;   
+    float timer;     
+    float amplitude;  
+    float frequency;  
+    float baseX;     
 } Enemy;
 
 typedef struct EnemyBullet {
