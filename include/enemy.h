@@ -36,6 +36,7 @@ typedef struct EnemyBullet {
 void InitEnemies(Enemy *enemies);
 void UpdateEnemies(Enemy *enemies);
 void DrawEnemies(Enemy *enemies);
+void FireEnemyLaser(Enemy *enemy, Bullet *enemyBullets);
 
 void LoadEnemyTexture(void);      // 加载纹理函数
 void UnloadEnemyTexture(void);    // 卸载纹理函数
