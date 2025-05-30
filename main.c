@@ -41,7 +41,7 @@ int main(void) {
 
         // 敌机发射炮弹（简单随机）
         for (int i = 0; i < MAX_ENEMIES; i++) {
-            if (enemies[i].active && GetRandomValue(0, 100) < 1) {
+             if (enemies[i].active && enemies[i].type == ENEMY_NORMAL && GetRandomValue(0, 100) < 1) {
                 Vector2 bulletVel = {0, 5};
                 Vector2 bulletPos = {enemies[i].position.x, enemies[i].position.y + 20};
                 FireBullet(enemyBullets, bulletPos, bulletVel);
@@ -51,7 +51,7 @@ int main(void) {
         // 更新模块
         UpdateBullets(playerBullets);
         UpdateBullets(enemyBullets);
-        UpdateEnemies(enemies);
+        UpdateEnemies(enemies, enemyBullets);
         CheckBulletEnemyCollisions(playerBullets, enemies);
         CheckPlayerHit(enemyBullets, playerPos, &playerHp);
 
