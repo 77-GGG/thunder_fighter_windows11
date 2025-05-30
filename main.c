@@ -165,7 +165,7 @@ int main(void) {
         DrawBullets(enemyBullets);
         DrawEnemies(enemies);
 
-        DrawText(TextFormat("time: %.1f", gameTime), 10, 10, 20, BLACK);
+        DrawText(TextFormat("time: %.1f", gameTime), 10, 70, 20, BLACK);
         DrawText(TextFormat("part: %d", currentDisplayWave), 10, 40, 20, BLACK);
         DrawText(TextFormat("HP: %d", playerHp), 10, 10, 20, RED);
         if (playerHp <= 0) {
