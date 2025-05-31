@@ -9,6 +9,7 @@
 
 #define MAX_ENEMIES 5
 #define MAX_ENEMY_BULLETS 50
+#define MAX_ENEMY_HP 3
 extern Texture2D enemy_texture;
 
 typedef struct Enemy {

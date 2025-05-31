@@ -16,7 +16,8 @@ int main(void) {
     // 玩家相关
     Vector2 playerPos = {400, 600};  // 玩家初始位置
     Texture plane = LoadTexture("../rsc/plane.png");
-    int playerHp = 3;//玩家的生命值
+    int playerHp = 5;//玩家的生命值
+    int score = 0;//增加得分变量
 
     Texture enemy_texture = LoadTexture("../rsc/enemy.png");
     // 初始化模块
@@ -52,7 +53,7 @@ int main(void) {
         UpdateBullets(playerBullets);
         UpdateBullets(enemyBullets);
         UpdateEnemies(enemies);
-        CheckBulletEnemyCollisions(playerBullets, enemies);
+        CheckBulletEnemyCollisions(playerBullets, enemies, &score);//传递得分指针
         CheckPlayerHit(enemyBullets, playerPos, &playerHp);
 
         // 绘制
@@ -64,7 +65,9 @@ int main(void) {
         DrawBullets(enemyBullets);
         DrawEnemies(enemies);
 
+        //显示HP和得分
         DrawText(TextFormat("HP: %d", playerHp), 10, 10, 20, RED);
+        DrawText(TextFormat("SCORE: %d", score), 10, 40, 20, BLUE); // 添加得分显示
         if (playerHp <= 0) {
             DrawText("GAME OVER", screen_width / 2 - 100, screen_height / 2, 40, BLACK);
         }

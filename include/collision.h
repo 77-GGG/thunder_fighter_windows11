@@ -11,7 +11,7 @@
 #include "utils.h"
 
 
-void CheckBulletEnemyCollisions(Bullet *playerBullets, Enemy *enemies);
+void CheckBulletEnemyCollisions(Bullet *playerBullets, Enemy *enemies, int *score);//传递得分指针
 bool CheckPlayerHit(Bullet *enemyBullets, Vector2 playerPos, int *hp);
 
 #endif

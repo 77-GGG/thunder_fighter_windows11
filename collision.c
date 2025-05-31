@@ -9,7 +9,8 @@
 
 
 
-void CheckBulletEnemyCollisions(Bullet *playerBullets, Enemy *enemies) {
+void CheckBulletEnemyCollisions(Bullet *playerBullets, Enemy *enemies, int *score) {
+    //增加得分参数
     for (int i = 0; i < MAX_ENEMIES; i++) {
         if (!enemies[i].active) continue;
 
@@ -21,6 +22,8 @@ void CheckBulletEnemyCollisions(Bullet *playerBullets, Enemy *enemies) {
                 enemies[i].hp--;
                 if (enemies[i].hp <= 0) {
                     enemies[i].active = false;
+                    //敌机被摧毁时增加得分
+                    if (score) *score += 10;
                 }
             }
         }
