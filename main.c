@@ -80,13 +80,15 @@ void SpawnEnemyBasedOnTime(Enemy *enemies, float gameTime, GameWave *waves, int 
 
 int main(void) {
     const int screen_width = 800;
-    const int screen_height = 1200;
+    const int screen_height = 1000;
     InitWindow(screen_width, screen_height, "thunder_fighter");
     SetTargetFPS(60);
 
     // 玩家相关
     Vector2 playerPos = {400, 600};  // 玩家初始位置
     Texture plane = LoadTexture("../rsc/plane.png");
+    Texture2D startButtonTexture = LoadTexture("../rsc/game_started.png");
+    Vector2 startButtonPosition = {(int)(300), (int)(200)};
     int playerHp = 5;//玩家的生命值
     int score = 0;//增加得分变量
 
@@ -112,6 +114,23 @@ int main(void) {
     InitBullets(playerBullets);
     InitBullets(enemyBullets);
     InitEnemies(enemies);
+    InitAudioDevice();
+    Music game_music = LoadMusicStream("../rsc/Chaotic Order.mp3");
+    Music main_music = LoadMusicStream("../rsc/main_BGM.mp3");
+    PlayMusicStream(main_music);
+    Texture2D background_texture = LoadTexture("../rsc/background.jpg");
+    Texture2D main_background_texture = LoadTexture("../rsc/main_background.png");
+    Vector2 titlePos = { screen_width/2 - MeasureText("Thunder_Fighter", 72)/2, 100, };
+
+    float titleSpeed = 0.5;
+
+    bool inMainMenu = true;
+    bool game_started =  false;
+
+    Rectangle playButton = { 400, 200, 50};
+    Color buttonColor = GRAY;
+    Color buttonHoverColor = LIGHTGRAY;
+    Color currentButtonColor = buttonColor;
 
      for (int i = 0; i < MAX_ENEMIES; i++) {
         enemies[i].active = false;
@@ -119,8 +138,35 @@ int main(void) {
 
 
     while (!WindowShouldClose()) {
+        if (inMainMenu) {
+            UpdateMusicStream(main_music);
+            DrawTexture(main_background_texture,0 ,0,WHITE);
 
-        gameTime += GetFrameTime();
+            DrawText("Thunder_Fighter", titlePos.x, titlePos.y, 72, RED);
+
+
+            DrawRectangleRec(playButton, currentButtonColor);
+            DrawTexture(startButtonTexture, playButton.x - 100 , playButton.y, WHITE);
+
+            titlePos.y += titleSpeed;
+            if (titlePos.y < 100 || titlePos.y > 120)
+            {
+                titleSpeed = -titleSpeed; // 反转速度方向
+            }
+
+
+            if (IsKeyDown(KEY_SPACE) || CheckCollisionPointRec(GetMousePosition(), (Rectangle){startButtonPosition.x, startButtonPosition.y, (float)startButtonTexture.width, (float)startButtonTexture.height}) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            {
+                game_started = true; // 切换到游戏状态
+                inMainMenu = false;
+                StopMusicStream(main_music);
+                PlayMusicStream(game_music);
+            }
+
+        }
+        if (game_started) {
+            UpdateMusicStream(game_music);
+                        gameTime += GetFrameTime();
 
         for (int i = 0; i < waveCount - 1; i++) {
             if (gameTime >= waves[i].startTime && gameTime < waves[i+1].startTime) {
@@ -174,10 +220,16 @@ int main(void) {
         DrawText(TextFormat("time: %.1f", gameTime), 10, 70, 20, BLACK);
         DrawText(TextFormat("part: %d", currentDisplayWave), 10, 40, 20, BLACK);
         DrawText(TextFormat("HP: %d", playerHp), 10, 10, 20, RED);
-        DrawText(TextFormat("SCORE: %d", score), 10, 40, 20, BLUE); // 添加得分显示
+        DrawText(TextFormat("SCORE: %d", score), 10, 100, 20, BLUE); // 添加得分显示
         if (playerHp <= 0) {
             DrawText("GAME OVER", screen_width / 2 - 100, screen_height / 2, 40, BLACK);
+            }
+
         }
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+
+
 
         EndDrawing();
     }
